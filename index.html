@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>세계 세계 탐험대!</title>
+    <!-- Google Fonts for Kid-friendly typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <!-- Globe.gl (requires Three.js implicitly via its bundle usually, but globe.gl standalone includes it) -->
+    <script src="https://unpkg.com/globe.gl"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <button id="mode-toggle">🌍 지구본 모드</button>
+    <button id="sound-toggle">🔊 소리 켜짐</button>
+
+    <div id="map"></div>
+    <div id="globe" class="hidden"></div>
+
+    <div id="info-panel" class="hidden">
+        <h1 id="country-name">나라 이름</h1>
+        <img id="country-flag" src="" alt="국기">
+        <div class="capital-container">
+            <span class="capital-label">수도:</span>
+            <span id="capital-name">수도 이름</span>
+        </div>
+        <button id="close-btn">닫기</button>
+    </div>
+
+    <div id="welcome-message">
+        <h2>지도에서 궁금한 나라를 클릭해봐요!</h2>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/three-globe"></script>
+    <script src="kr_capitals.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
