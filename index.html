@@ -3,6 +3,46 @@
 
 <head>
     <meta charset="UTF-8">
+<script>
+/* 카카오톡·네이버·페이스북·인스타그램·라인·밴드 등 앱 안 브라우저로 열리면 기본 브라우저(크롬·사파리)로 다시 열기 */
+(function () {
+  if (window.top !== window.self) return;
+  var ua = navigator.userAgent || '';
+  var url = location.href;
+  var inApp = /KAKAOTALK|KAKAOSTORY|NAVER\(inapp|NAVER\/|FBAN|FBAV|FB_IAB|FBIOS|Instagram|\bLine\/|DaumApps|BAND\/|everytimeApp|Whale\/[\d.]+ .*inapp|; wv\)/i.test(ua);
+  if (!inApp) return;
+  if (/KAKAOTALK/i.test(ua)) { location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(url); return; }
+  if (/\bLine\//i.test(ua)) {
+    if (url.indexOf('openExternalBrowser=1') < 0) location.href = url + (url.indexOf('?') < 0 ? '?' : '&') + 'openExternalBrowser=1';
+    return;
+  }
+  if (/Android/i.test(ua)) {
+    location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;end';
+    return;
+  }
+  // 아이폰의 앱 안 브라우저는 사파리로 바로 넘길 수 없어 안내 화면을 띄움
+  document.addEventListener('DOMContentLoaded', function () {
+    var box = document.createElement('div');
+    box.setAttribute('role', 'dialog');
+    box.style.cssText = 'position:fixed;inset:0;z-index:2147483647;background:rgba(20,24,32,.94);color:#f2f3f6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;font:15px/1.6 -apple-system,system-ui,sans-serif;word-break:keep-all';
+    box.innerHTML = '<strong style="font-size:18px">사파리에서 열어 주세요</strong>' +
+      '<span>이 앱 안의 브라우저에서는 소리나 화면이 제대로 작동하지 않을 수 있어요.<br>오른쪽 아래 ⋯ 또는 공유 버튼에서 <b>Safari로 열기</b>를 눌러 주세요.</span>' +
+      '<button type="button" data-a="copy" style="font:inherit;padding:10px 20px;border-radius:999px;border:0;background:#f2f3f6;color:#141820">주소 복사</button>' +
+      '<button type="button" data-a="stay" style="font:inherit;background:none;border:0;color:#aab0bd;text-decoration:underline">그냥 여기서 보기</button>';
+    box.addEventListener('click', function (e) {
+      var a = e.target.getAttribute && e.target.getAttribute('data-a');
+      if (a === 'stay') box.remove();
+      if (a === 'copy') {
+        var b = e.target;
+        (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(
+          function () { b.textContent = '복사했어요'; },
+          function () { window.prompt('주소를 복사해 사파리에 붙여 넣어 주세요', url); });
+      }
+    });
+    document.body.appendChild(box);
+  });
+})();
+</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>세계 세계 탐험대!</title>
     <!-- Google Fonts for Kid-friendly typography -->
